@@ -17,7 +17,7 @@ import com.example.allowmgmt_backend.services.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://allowmgmt.vercel.app", allowCredentials = "true")
 public class UserController {
     
     @Autowired
