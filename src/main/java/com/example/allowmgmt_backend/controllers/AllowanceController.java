@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.allowmgmt_backend.models.Allowance;
 import com.example.allowmgmt_backend.repositories.AllowanceRepository;
@@ -49,6 +51,21 @@ public class AllowanceController {
     public Allowance getUserAllowanceByName(@PathVariable Long userId,
                                             @PathVariable Long id) {
         return repo.findByUserIdAndId(userId, id).orElse(null);
+    }
+
+    @PutMapping("/{userId}/{id}/add")
+    public Allowance addAllowance(
+        @PathVariable Long userId,
+        @PathVariable Long id,
+        @RequestParam Double amountToAdd
+    )
+    {
+
+        Allowance allowance = repo.findByUserIdAndId(userId, id).orElse(null);
+        allowance.setAllowance(allowance.getAllowance() + amountToAdd);
+        
+        return repo.save(allowance);
+
     }
 
 }
