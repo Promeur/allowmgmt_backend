@@ -2,7 +2,10 @@ package com.example.allowmgmt_backend.controllers;
 
 // import java.util.List;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +17,7 @@ import com.example.allowmgmt_backend.services.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://allowmgmt.vercel.app", allowCredentials = "true")
 public class UserController {
     
     @Autowired
@@ -26,8 +29,12 @@ public class UserController {
     // }
 
     @GetMapping("/{id}")
-    public Users getUserById(@PathVariable Long id) {
-        return service.getUserById(id);
+    public ResponseEntity<Users> getUserById(@PathVariable Long id) {
+        // return service.getUserById(id);
+        Optional<Users> user = Optional.ofNullable(service.getUserById(id));
+        System.out.println("User found: " + user); // logs to see what's returned
+        return user.map(ResponseEntity::ok)
+                   .orElse(ResponseEntity.notFound().build());
     }
 
 }
