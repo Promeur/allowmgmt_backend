@@ -19,7 +19,7 @@ import com.example.allowmgmt_backend.repositories.AllowanceRepository;
 
 @RestController
 @RequestMapping("/api/purchases")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://allowmgmt.vercel.app", allowCredentials = "true")
 public class PurchasesController {
     
     @Autowired
