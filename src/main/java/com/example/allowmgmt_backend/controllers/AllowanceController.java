@@ -47,6 +47,24 @@ public class AllowanceController {
         return repo.findByUserId(userId);
     }
 
+    @PutMapping("/{userId}/new")
+    public Allowance newAllowance(
+        @PathVariable Long userId,
+        @RequestParam String name,
+        @RequestParam Double allowance
+    ){
+        
+        Allowance newAllowance = new Allowance();
+        newAllowance.setUserId(userId);
+        newAllowance.setName(name);
+        newAllowance.setAllowance(allowance);
+        
+        return repo.save(newAllowance);
+
+
+    }
+    
+
     @GetMapping("/{userId}/{id}")
     public Allowance getUserAllowanceByName(@PathVariable Long userId,
                                             @PathVariable Long id) {
