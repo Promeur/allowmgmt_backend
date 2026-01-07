@@ -6,7 +6,7 @@
 
 package com.example.allowmgmt_backend.controllers;
 
-// import java.util.List;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,10 +42,28 @@ public class AllowanceController {
      @Autowired
     private AllowanceRepository repo;
 
-    // @GetMapping("/{userId}")
-    // public List<Allowance> getUserAllowance(@PathVariable Long userId) {
-    //     return repo.findByUserId(userId);
-    // }
+    @GetMapping("/{userId}")
+    public List<Allowance> getUserAllowance(@PathVariable Long userId) {
+        return repo.findByUserId(userId);
+    }
+
+    @PutMapping("/{userId}/new")
+    public Allowance newAllowance(
+        @PathVariable Long userId,
+        @RequestParam String name,
+        @RequestParam Double allowance
+    ){
+        
+        Allowance newAllowance = new Allowance();
+        newAllowance.setUserId(userId);
+        newAllowance.setName(name);
+        newAllowance.setAllowance(allowance);
+        
+        return repo.save(newAllowance);
+
+
+    }
+    
 
     @GetMapping("/{userId}/{id}")
     public Allowance getUserAllowanceByName(@PathVariable Long userId,
